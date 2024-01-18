@@ -1,0 +1,79 @@
+# Users:
+wwid (Primary Key)
+name
+activated
+department_id (Foreign Key to Department)
+job_title
+shift_id (Foreign Key to Shifts)
+task_id (Foreign Key to Task)
+status
+start_date
+leaving_date
+badge_color
+reason_for_leaving
+area_id (Foreign Key to Area)
+user_type (e.g., supervisor)
+site_id (Foreign Key to Site)
+
+# Area:
+area_id (Primary Key)
+area_name
+Department:
+
+department_id (Primary Key)
+department_name
+
+# Procedure:
+number (Primary Key)
+name
+active
+kev_number
+release_date
+review_date
+comment_on_status
+task_id (Foreign Key to Task)
+department_id (Foreign Key to Department)
+reads_and_understand
+training_id
+
+# Job:
+job_id (Primary Key)
+job_title
+Shifts:
+
+shift_id (Primary Key)
+shift_name
+start_time
+end_time
+Task:
+
+task_id (Primary Key)
+task_name
+
+# Site:
+site_id (Primary Key)
+site_name
+location
+
+
+Relationships 
+1. Users - Department:
+Foreign Key relationship between Users.department_id and Department.department_id.
+
+2. Users - Shifts:
+Foreign Key relationship between Users.shift_id and Shifts.shift_id.
+
+3. Users - Task:
+Foreign Key relationship between Users.task_id and Task.task_id.
+
+4. Users - Area:
+Foreign Key relationship between Users.area_id and Area.area_id.
+
+5. Users - Site:
+Foreign Key relationship between Users.site_id and Site.site_id.
+
+6. Procedure - Task:
+Foreign Key relationship between Procedure.task_id and Task.task_id.
+
+7. Procedure - Department:
+Foreign Key relationship between Procedure.department_id and Department.department_id.
