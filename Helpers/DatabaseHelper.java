@@ -11,7 +11,7 @@ public class DatabaseHelper {
     private static final String PASSWORD = ""; 
 
     static {
-        try {
+        try {     
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -28,7 +28,6 @@ public class DatabaseHelper {
         createOtherTables(connection);
         // Add other table creation calls as needed
     }
-
     private static void createUsersTable(Connection connection) throws SQLException {
         String query = "CREATE TABLE IF NOT EXISTS Users (" +
                 "wwid INT PRIMARY KEY," +
@@ -47,17 +46,20 @@ public class DatabaseHelper {
                 "area_id INT," +
                 "user_type VARCHAR(255)," +
                 "site_id INT," +
-                "FOREIGN KEY (department_id) REFERENCES Department(department_id)," +
-                "FOREIGN KEY (shift_id) REFERENCES Shifts(shift_id)," +
-                "FOREIGN KEY (task_id) REFERENCES Task(task_id)," +
-                "FOREIGN KEY (area_id) REFERENCES Area(area_id)," +
-                "FOREIGN KEY (site_id) REFERENCES Site(site_id)" +
+                "FOREIGN KEY (department_id) REFERENCES Department(department_id) ON DELETE CASCADE," +
+                "FOREIGN KEY (shift_id) REFERENCES Shifts(shift_id) ON DELETE CASCADE," +
+                "FOREIGN KEY (task_id) REFERENCES Task(task_id) ON DELETE CASCADE," +
+                "FOREIGN KEY (area_id) REFERENCES Area(area_id) ON DELETE CASCADE," +
+                "FOREIGN KEY (site_id) REFERENCES Site(site_id) ON DELETE CASCADE" +
                 ")";
-
+    
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.executeUpdate();
         }
     }
+    
+    }
+    
 
     private static void createOtherTables(Connection connection) throws SQLException {
         // Implement table creation statements for other tables
