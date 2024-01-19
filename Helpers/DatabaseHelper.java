@@ -1,5 +1,6 @@
 package Helpers;
 
+import org.mindrot.bcrypt.BCrypt;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -7,11 +8,11 @@ import java.sql.SQLException;
 
 public class DatabaseHelper {
     private static final String JDBC_URL = "jdbc:mysql://localhost:3306/employmanager";
-    private static final String USERNAME = "root"; 
-    private static final String PASSWORD = ""; 
+    private static final String USERNAME = "root";
+    private static final String PASSWORD = "";
 
     static {
-        try {     
+        try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -23,46 +24,154 @@ public class DatabaseHelper {
         return DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
     }
 
-    public static void createTables(Connection connection) throws SQLException {
-        createUsersTable(connection);
-        createOtherTables(connection);
-        // Add other table creation calls as needed
+    public static void createTables(Connection connection) {
+        try {
+            createDepartmentTable(connection);
+            createShiftsTable(connection);
+            createTaskTable(connection);
+            createAreaTable(connection);
+            createSiteTable(connection);
+            createTrainingTable(connection);
+            createProceduresTable(connection);
+            createUsersTable(connection);
+            createTaskProceduresTable(connection);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
-    private static void createUsersTable(Connection connection) throws SQLException {
+
+    public static void createDepartmentTable(Connection connection) throws SQLException {
+        String query = "CREATE TABLE IF NOT EXISTS Department (" +
+                "department_id INT PRIMARY KEY, " +
+                "name VARCHAR(255) NOT NULL)";
+        executeUpdate(connection, query);
+    }
+
+    public static void createShiftsTable(Connection connection) throws SQLException {
+        String query = "CREATE TABLE IF NOT EXISTS Shifts (" +
+                "shift_id INT PRIMARY KEY, " +
+                "name VARCHAR(255) NOT NULL, " +
+                "start_time VARCHAR(255) NOT NULL, " +
+                "end_time VARCHAR(255) NOT NULL)";
+        executeUpdate(connection, query);
+    }
+
+    public static void createTaskTable(Connection connection) throws SQLException {
+        String query = "CREATE TABLE IF NOT EXISTS Task (" +
+                "task_id INT PRIMARY KEY, " +
+                "name VARCHAR(255) NOT NULL, " +
+                "status VARCHAR(50) NOT NULL DEFAULT 'Pending')";
+        executeUpdate(connection, query);
+    }
+
+    public static void createAreaTable(Connection connection) throws SQLException {
+        String query = "CREATE TABLE IF NOT EXISTS Area (" +
+                "area_id INT PRIMARY KEY, " +
+                "name VARCHAR(255) NOT NULL)";
+        executeUpdate(connection, query);
+    }
+
+    public static void createSiteTable(Connection connection) throws SQLException {
+        String query = "CREATE TABLE IF NOT EXISTS Site (" +
+                "site_id INT PRIMARY KEY, " +
+                "name VARCHAR(255) NOT NULL)";
+        executeUpdate(connection, query);
+    }
+
+    public static void createTrainingTable(Connection connection) throws SQLException {
+        String query = "CREATE TABLE IF NOT EXISTS Training (" +
+                "training_id INT PRIMARY KEY, " +
+                "name VARCHAR(255) NOT NULL)";
+        executeUpdate(connection, query);
+    }
+
+    public static void createProceduresTable(Connection connection) throws SQLException {
+        String query = "CREATE TABLE IF NOT EXISTS Procedures (" +
+                "procedure_id INT PRIMARY KEY AUTO_INCREMENT, " +
+                "name VARCHAR(255) NOT NULL, " +
+                "active VARCHAR(255) NOT NULL, " +
+                "key_number INT NOT NULL, " +
+                "release_date DATE NOT NULL, " +
+                "comment_on_status VARCHAR(255) NOT NULL, " +
+                "department_id INT, " +
+                "reads_and_understand VARCHAR(255) NOT NULL, " +
+                "training_id INT, " +
+                "FOREIGN KEY (department_id) REFERENCES Department(department_id) ON DELETE CASCADE, " +
+                "FOREIGN KEY (training_id) REFERENCES Training(training_id) ON DELETE CASCADE" +
+                ")";
+        executeUpdate(connection, query);
+    }
+
+    public static void createUsersTable(Connection connection) throws SQLException {
         String query = "CREATE TABLE IF NOT EXISTS Users (" +
-                "wwid INT PRIMARY KEY," +
-                "name VARCHAR(255) NOT NULL," +
-                "password VARCHAR(255) NOT NULL," +
-                "activated BOOLEAN NOT NULL," +
-                "department_id INT," +
-                "job_title VARCHAR(255)," +
-                "shift_id INT," +
-                "task_id INT," +
-                "status VARCHAR(255)," +
-                "start_date DATE," +
-                "leaving_date DATE," +
-                "badge_color VARCHAR(255)," +
-                "reason_for_leaving VARCHAR(255)," +
-                "area_id INT," +
-                "user_type VARCHAR(255)," +
-                "site_id INT," +
-                "FOREIGN KEY (department_id) REFERENCES Department(department_id) ON DELETE CASCADE," +
-                "FOREIGN KEY (shift_id) REFERENCES Shifts(shift_id) ON DELETE CASCADE," +
-                "FOREIGN KEY (task_id) REFERENCES Task(task_id) ON DELETE CASCADE," +
-                "FOREIGN KEY (area_id) REFERENCES Area(area_id) ON DELETE CASCADE," +
+                "wwid INT PRIMARY KEY, " +
+                "name VARCHAR(255) NOT NULL, " +
+                "password VARCHAR(255) NOT NULL, " +
+                "activated BOOLEAN NOT NULL, " +
+                "department_id INT, " +
+                "job_title VARCHAR(255), " +
+                "shift_id INT, " +
+                "task_id INT, " +
+                "status VARCHAR(255), " +
+                "start_date DATE, " +
+                "leaving_date DATE, " +
+                "badge_color VARCHAR(255), " +
+                "reason_for_leaving VARCHAR(255), " +
+                "area_id INT, " +
+                "user_type VARCHAR(255), " +
+                "site_id INT, " +
+                "FOREIGN KEY (department_id) REFERENCES Department(department_id) ON DELETE CASCADE, " +
+                "FOREIGN KEY (shift_id) REFERENCES Shifts(shift_id) ON DELETE CASCADE, " +
+                "FOREIGN KEY (task_id) REFERENCES Task(task_id) ON DELETE CASCADE, " +
+                "FOREIGN KEY (area_id) REFERENCES Area(area_id) ON DELETE CASCADE, " +
                 "FOREIGN KEY (site_id) REFERENCES Site(site_id) ON DELETE CASCADE" +
                 ")";
+        executeUpdate(connection, query);
+          // Insert default admin user
+          insertDefaultAdminUser(connection);
+    }
+
+    private static void insertDefaultAdminUser(Connection connection) throws SQLException {
+        String adminUsername = "admin@gmail.com";
+        String adminPassword = "admin";
+    
+        // Generate a salt and hash the password
+        String salt = BCrypt.gensalt();
+        String hashedPassword = BCrypt.hashpw(adminPassword, salt);
+    
+        String query = "INSERT INTO Users (wwid, name, password, activated, user_type) " +
+                "VALUES (?, ?, ?, ?, ?)";
     
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, 1); // Use a unique ID for the admin user
+            preparedStatement.setString(2, adminUsername);
+            preparedStatement.setString(3, hashedPassword);
+            preparedStatement.setBoolean(4, true); // Activated
+            preparedStatement.setString(5, "admin");
+    
             preparedStatement.executeUpdate();
         }
     }
     
-    }
-    
 
-    private static void createOtherTables(Connection connection) throws SQLException {
-        // Implement table creation statements for other tables
-        // ...
+    public static void createTaskProceduresTable(Connection connection) throws SQLException {
+        String query = "CREATE TABLE IF NOT EXISTS TaskProcedures (" +
+                "task_id INT, " +
+                "procedure_id INT, " +
+                "PRIMARY KEY (task_id, procedure_id), " +
+                "FOREIGN KEY (task_id) REFERENCES Task(task_id) ON DELETE CASCADE, " +
+                "FOREIGN KEY (procedure_id) REFERENCES Procedures(procedure_id) ON DELETE CASCADE" +
+                ")";
+        executeUpdate(connection, query);
+    }
+
+    private static void executeUpdate(Connection connection, String query) throws SQLException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Failed SQL query: " + query);
+            e.printStackTrace();
+            throw e;
+        }
     }
 }

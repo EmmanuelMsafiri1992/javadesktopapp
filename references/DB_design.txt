@@ -13,13 +13,14 @@ badge_color
 reason_for_leaving
 area_id (Foreign Key to Area)
 user_type (e.g., supervisor)
-site_id (Foreign Key to Site)
+site_id (Foreign Key to Site)  
 
 # Area:
 area_id (Primary Key)
-area_name
-Department:
+area_name   
 
+
+# Department:  
 department_id (Primary Key)
 department_name
 
@@ -39,21 +40,42 @@ training_id
 # Job:
 job_id (Primary Key)
 job_title
-Shifts:
 
+# Training
+id
+name       
+
+
+silicon 
+returns
+project
+receiving
+reticle rover 
+training 
+buillpen_leixlip
+bullpen_off_site
+bullpen_on_site
+csi_and_nit
+inventory 
+managment 
+
+
+
+
+# Shifts:
 shift_id (Primary Key)
 shift_name
 start_time
 end_time
-Task:
 
+# Task:
 task_id (Primary Key)
 task_name
 
 # Site:
 site_id (Primary Key)
 site_name
-location
+location 
 
 
 Relationships 
