@@ -1,10 +1,10 @@
-package Front;
+package front;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Scanner;
-import Helpers.DatabaseHelper;
-import Authentication.UserAuthenticator;
+import helpers.DatabaseHelper;
+import authentication.UserAuthenticator;
 
 public class ConsoleUI {
     public static void main(String[] args) {
@@ -35,3 +35,5 @@ public class ConsoleUI {
         }
     }
 }
+
+

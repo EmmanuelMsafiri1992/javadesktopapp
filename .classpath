@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<classpath>
-    <classpathentry kind="lib" path="lib/jBCrypt-0.4.1.jar"/>
-    <!-- Add other entries if needed -->
-</classpath>

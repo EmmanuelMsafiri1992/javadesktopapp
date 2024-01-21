@@ -1,0 +1,49 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "TrainerDashboard",
+            "request": "launch",
+            "mainClass": "front.TrainerDashboard",
+            "projectName": "javadesktopapp_ddd3966a"
+        },
+        {
+            "type": "java",
+            "name": "AdminDashboard",
+            "request": "launch",
+            "mainClass": "front.AdminDashboard",
+            "projectName": "javadesktopapp_ddd3966a"
+        },
+        {
+            "type": "java",
+            "name": "EmployeeManagementApp",
+            "request": "launch",
+            "mainClass": "front.EmployeeManagementApp",
+            "projectName": "javadesktopapp_ddd3966a"
+        },
+        {
+            "type": "java",
+            "name": "Login",
+            "request": "launch",
+            "mainClass": "front.Login",
+            "projectName": "javadesktopapp_ddd3966a"
+        },
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "ConsoleUI",
+            "request": "launch",
+            "mainClass": "front.ConsoleUI",
+            "projectName": "javadesktopapp_ddd3966a"
+        }
+    ]
+}
