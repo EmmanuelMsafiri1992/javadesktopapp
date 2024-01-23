@@ -1,49 +1,112 @@
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "type": "java",
-            "name": "TrainerDashboard",
-            "request": "launch",
-            "mainClass": "front.TrainerDashboard",
-            "projectName": "javadesktopapp_ddd3966a"
-        },
-        {
-            "type": "java",
-            "name": "AdminDashboard",
-            "request": "launch",
-            "mainClass": "front.AdminDashboard",
-            "projectName": "javadesktopapp_ddd3966a"
-        },
-        {
-            "type": "java",
-            "name": "EmployeeManagementApp",
-            "request": "launch",
-            "mainClass": "front.EmployeeManagementApp",
-            "projectName": "javadesktopapp_ddd3966a"
-        },
-        {
-            "type": "java",
-            "name": "Login",
-            "request": "launch",
-            "mainClass": "front.Login",
-            "projectName": "javadesktopapp_ddd3966a"
-        },
-        {
-            "type": "java",
-            "name": "Current File",
-            "request": "launch",
-            "mainClass": "${file}"
-        },
-        {
-            "type": "java",
-            "name": "ConsoleUI",
-            "request": "launch",
-            "mainClass": "front.ConsoleUI",
-            "projectName": "javadesktopapp_ddd3966a"
-        }
-    ]
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "TrainerModel",
+      "request": "launch",
+      "mainClass": "helpers.TrainerModel",
+      "projectName": "javadesktopapp_7e399a8"
+    },
+    {
+      "type": "java",
+      "name": "EmployeeDashboard",
+      "request": "launch",
+      "mainClass": "front.EmployeeDashboard",
+      "projectName": "javadesktopapp_7e399a8"
+    },
+    {
+      "type": "java",
+      "name": "TrainerDashboard",
+      "request": "launch",
+      "mainClass": "front.TrainerDashboard",
+      "projectName": "javadesktopapp_7e399a8"
+    },
+    {
+      "type": "java",
+      "name": "CoordinatorDashboard",
+      "request": "launch",
+      "mainClass": "front.CoordinatorDashboard",
+      "projectName": "javadesktopapp_7e399a8"
+    },
+    {
+      "type": "java",
+      "name": "TrainingWindow",
+      "request": "launch",
+      "mainClass": "front.TrainingWindow",
+      "projectName": "javadesktopapp_7e399a8"
+    },
+    {
+      "type": "java",
+      "name": "SupervisorDashboard",
+      "request": "launch",
+      "mainClass": "front.SupervisorDashboard",
+      "projectName": "javadesktopapp_7e399a8"
+    },
+    {
+      "type": "java",
+      "name": "Login",
+      "request": "launch",
+      "mainClass": "front.Login",
+      "projectName": "javadesktopapp_7e399a8"
+    },
+    {
+      "type": "java",
+      "name": "AdminDashboard",
+      "request": "launch",
+      "mainClass": "front.AdminDashboard",
+      "projectName": "javadesktopapp_7e399a8"
+    },
+    {
+      "type": "java",
+      "name": "AdminDashboard",
+      "request": "launch",
+      "mainClass": "Front.AdminDashboard",
+      "projectName": "javadesktopapp_7e399a8"
+    },
+    {
+      "type": "java",
+      "name": "TrainerDashboard",
+      "request": "launch",
+      "mainClass": "front.TrainerDashboard",
+      "projectName": "javadesktopapp_ddd3966a"
+    },
+    {
+      "type": "java",
+      "name": "AdminDashboard",
+      "request": "launch",
+      "mainClass": "front.AdminDashboard",
+      "projectName": "javadesktopapp_ddd3966a"
+    },
+    {
+      "type": "java",
+      "name": "EmployeeManagementApp",
+      "request": "launch",
+      "mainClass": "front.EmployeeManagementApp",
+      "projectName": "javadesktopapp_ddd3966a"
+    },
+    {
+      "type": "java",
+      "name": "Login",
+      "request": "launch",
+      "mainClass": "front.Login",
+      "projectName": "javadesktopapp_ddd3966a"
+    },
+    {
+      "type": "java",
+      "name": "Current File",
+      "request": "launch",
+      "mainClass": "${file}"
+    },
+    {
+      "type": "java",
+      "name": "ConsoleUI",
+      "request": "launch",
+      "mainClass": "front.ConsoleUI",
+      "projectName": "javadesktopapp_ddd3966a"
+    }
+  ]
 }

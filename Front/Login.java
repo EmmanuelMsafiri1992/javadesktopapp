@@ -9,6 +9,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import helpers.DatabaseHelper;
 
 public class Login extends JFrame {
 
@@ -156,8 +157,15 @@ public class Login extends JFrame {
             }
         });
     }
-
     public static void main(String[] args) {
+        // Create tables before launching the application
+        try (Connection connection = DatabaseHelper.getConnection()) {
+            DatabaseHelper.createTables(connection);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle the exception appropriately (e.g., log, display an error message)
+        }
+
         // Run the application
         SwingUtilities.invokeLater(() -> new Login());
     }

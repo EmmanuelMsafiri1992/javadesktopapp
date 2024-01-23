@@ -3,7 +3,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import helpers.User;
+import java.sql.Statement;
 import java.sql.SQLException;
 
 public class DatabaseHelper {
@@ -44,14 +44,14 @@ public class DatabaseHelper {
         }
     public static void createDepartmentTable(Connection connection) throws SQLException {
         String query = "CREATE TABLE IF NOT EXISTS Department (" +
-                "department_id INT PRIMARY KEY, " +
+                "department_id INT PRIMARY KEY AUTO_INCREMENT, " +
                 "name VARCHAR(255) NOT NULL)";
         executeUpdate(connection, query);
     }
 
     public static void createShiftsTable(Connection connection) throws SQLException {
         String query = "CREATE TABLE IF NOT EXISTS Shifts (" +
-                "shift_id INT PRIMARY KEY, " +
+                "shift_id INT PRIMARY KEY AUTO_INCREMENT, " +
                 "name VARCHAR(255) NOT NULL, " +
                 "start_time VARCHAR(255) NOT NULL, " +
                 "end_time VARCHAR(255) NOT NULL)";
@@ -60,7 +60,7 @@ public class DatabaseHelper {
 
     public static void createTaskTable(Connection connection) throws SQLException {
         String query = "CREATE TABLE IF NOT EXISTS Task (" +
-                "task_id INT PRIMARY KEY, " +
+                "task_id INT PRIMARY KEY AUTO_INCREMENT, " +
                 "name VARCHAR(255) NOT NULL, " +
                 "status VARCHAR(50) NOT NULL DEFAULT 'Pending')";
         executeUpdate(connection, query);
@@ -68,21 +68,21 @@ public class DatabaseHelper {
 
     public static void createAreaTable(Connection connection) throws SQLException {
         String query = "CREATE TABLE IF NOT EXISTS Area (" +
-                "area_id INT PRIMARY KEY, " +
+                "area_id INT PRIMARY KEY AUTO_INCREMENT, " +
                 "name VARCHAR(255) NOT NULL)";
         executeUpdate(connection, query);
     }
 
     public static void createSiteTable(Connection connection) throws SQLException {
         String query = "CREATE TABLE IF NOT EXISTS Site (" +
-                "site_id INT PRIMARY KEY, " +
+                "site_id INT PRIMARY KEY AUTO_INCREMENT, " +
                 "name VARCHAR(255) NOT NULL)";
         executeUpdate(connection, query);
     }
 
     public static void createTrainingTable(Connection connection) throws SQLException {
         String query = "CREATE TABLE IF NOT EXISTS Training (" +
-                "training_id INT PRIMARY KEY, " +
+                "training_id INT PRIMARY KEY AUTO_INCREMENT, " +
                 "name VARCHAR(255) NOT NULL)";
         executeUpdate(connection, query);
     }
@@ -151,7 +151,30 @@ insertDefaultAdminUser(connection);
             preparedStatement.executeUpdate();
         }
     }
-
+    public static void insertArea(Connection connection, String areaName) throws SQLException {
+        String query = "INSERT INTO Area (name) VALUES (?)";
+    
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+            preparedStatement.setString(1, areaName);
+    
+            int affectedRows = preparedStatement.executeUpdate();
+    
+            if (affectedRows == 0) {
+                throw new SQLException("Creating area failed, no rows affected.");
+            }
+    
+            try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    // Retrieve the auto-generated area_id and use it if needed
+                    int generatedAreaId = generatedKeys.getInt(1);
+                    // You can use the generatedAreaId as needed
+                } else {
+                    throw new SQLException("Creating area failed, no ID obtained.");
+                }
+            }
+        }
+    }
+    
     public static void createTaskProceduresTable(Connection connection) throws SQLException {
         String query = "CREATE TABLE IF NOT EXISTS TaskProcedures (" +
                 "task_id INT, " +
