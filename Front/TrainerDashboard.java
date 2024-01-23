@@ -53,7 +53,6 @@ public class TrainerDashboard extends JFrame {
         addButton(buttonPanel, "Training Management", e -> showTable("Training"), gbc);
         addButton(buttonPanel, "Task Management", e -> showTable("Task"), gbc);
         addButton(buttonPanel, "Procedure Management", e -> showTable("Procedures"), gbc);
-        addButton(buttonPanel, "Site Management", e -> showTable("Site"), gbc);
         addButton(buttonPanel, "Site Management", e -> showSiteManagement(), gbc);
         addButton(buttonPanel, "Area Management", e -> showAreaManagement(), gbc);
 
@@ -346,23 +345,7 @@ public class TrainerDashboard extends JFrame {
         siteDialog.setLocationRelativeTo(this);
         siteDialog.setVisible(true);
     }
-    
-    // private void refreshSiteTableData(JTable siteTable) {
-    //     // Fetch updated data for the "Site" table from the database
-    //     Object[][] rowData = siteModel.getDataForSiteManagement();
-    
-    //     // Get the existing table model
-    //     DefaultTableModel tableModel = (DefaultTableModel) siteTable.getModel();
-    
-    //     // Remove all existing rows from the table model
-    //     tableModel.setRowCount(0);
-    
-    //     // Add the new rows to the table model
-    //     for (Object[] row : rowData) {
-    //         tableModel.addRow(row);
-    //     }
-    // }
-    
+
     private void handleAddSiteButtonClick(JDialog dialog, JTable siteTable) {
         // Implement logic for "Add" button
         String newSiteName = JOptionPane.showInputDialog(dialog, "Enter new Site Name:");
@@ -382,6 +365,7 @@ public class TrainerDashboard extends JFrame {
             JOptionPane.showMessageDialog(dialog, "Operation canceled or invalid input.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
+
     private void handleEditSiteButtonClick(JDialog dialog, JTable siteTable) {
         // Get the selected row index
         int selectedRow = siteTable.getSelectedRow();
@@ -390,20 +374,15 @@ public class TrainerDashboard extends JFrame {
         if (selectedRow != -1) {
             // Get the current site name and description from the selected row
             String currentSiteName = (String) siteTable.getValueAt(selectedRow, 1);  // Assuming "Site Name" is in the second column (index 1)
-            String currentSiteDescription = (String) siteTable.getValueAt(selectedRow, 2);  // Assuming "Site Description" is in the third column (index 2)
     
             // Prompt the user for a new site name and description
             String newSiteName = JOptionPane.showInputDialog(dialog, "Edit Site Name:", currentSiteName);
     
-    
-            // Validate and process the newSiteName and newSiteDescription as needed
+            // Validate and process the newSiteName as needed
             if (newSiteName != null && !newSiteName.isEmpty()) {
-                // Call TrainerModel method to update site in the database
-                
-                // trainerModel.updateSite(currentSiteName, newSiteName, newSiteDescription);
+                // Call SiteModel method to update site in the database
                 siteModel.updateSite(currentSiteName, newSiteName);
-                
-                
+    
                 // Refresh the table data from the database
                 refreshSiteTableData(siteTable);
     
@@ -418,9 +397,10 @@ public class TrainerDashboard extends JFrame {
             JOptionPane.showMessageDialog(dialog, "Please select a row to edit.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
+    
     private void refreshSiteTableData(JTable siteTable) {
         // Fetch updated data for the "Site" table from the database
-        Object[][] rowData = trainerModel.getDataForAreaManagement();
+        Object[][] rowData = siteModel.getDataForSiteManagement();
     
         // Get the existing table model
         DefaultTableModel tableModel = (DefaultTableModel) siteTable.getModel();
